@@ -1,0 +1,1 @@
+.gitignore\nREADME.md\n.github/workflows/build.yml\ndocs/DEVELOPMENT.md\ndocs/DEPLOYMENT.md\nsrc/TScan.Web/TScan.Web.csproj\nsrc/TScan.Web/Program.cs\nsrc/TScan.Web/appsettings.json\nsrc/TScan.Infrastructure/TScan.Infrastructure.csproj\ntscan-client-portal.sln\n
