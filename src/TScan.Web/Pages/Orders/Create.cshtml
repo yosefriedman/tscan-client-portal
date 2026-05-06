@@ -1,0 +1,126 @@
+@page "{matterId}"
+@model CreateOrderModel
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+<div class="container mt-4">
+    <h1>Create Record Retrieval Order</h1>
+
+    @if (Model.Matter != null)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Matter Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Matter:</strong> @Model.Matter.MatterName</p>
+                        <p><strong>Client:</strong> @Model.Matter.ClientName</p>
+                        <p><strong>File #:</strong> @Model.Matter.FileNumber</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Attorney:</strong> @Model.Matter.ResponsibleAttorney</p>
+                        <p><strong>Case Caption:</strong> @Model.Matter.CaseCaption</p>
+                        <p><strong>Jurisdiction:</strong> @Model.Matter.CourtJurisdiction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Order Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Order.OrderType" class="form-label">Order Type *</label>
+                            <select asp-for="Order.OrderType" class="form-select" required>
+                                <option value="">-- Select Order Type --</option>
+                                <option value="Medical Records">Medical Records</option>
+                                <option value="Court Documents">Court Documents</option>
+                                <option value="Deposition Transcript">Deposition Transcript</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Order.OrderType" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Order.ProviderName" class="form-label">Provider/Custodian Name *</label>
+                            <input asp-for="Order.ProviderName" class="form-control" required />
+                            <span asp-validation-for="Order.ProviderName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label asp-for="Order.ProviderAddress" class="form-label">Provider Address</label>
+                            <input asp-for="Order.ProviderAddress" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Order.RecordType" class="form-label">Record Type *</label>
+                            <input asp-for="Order.RecordType" class="form-control" required />
+                            <span asp-validation-for="Order.RecordType" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Order.ProviderContact" class="form-label">Provider Contact</label>
+                            <input asp-for="Order.ProviderContact" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="dateStart" class="form-label">Date Range Start</label>
+                            <input type="date" id="dateStart" name="dateStart" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="dateEnd" class="form-label">Date Range End</label>
+                            <input type="date" id="dateEnd" name="dateEnd" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label asp-for="Order.SpecialInstructions" class="form-label">Special Instructions</label>
+                            <textarea asp-for="Order.SpecialInstructions" class="form-control" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Order.BillingReference" class="form-label">Billing Reference</label>
+                            <input asp-for="Order.BillingReference" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Supporting Documents</h5>
+                </div>
+                <div class="card-body">
+                    <p>Upload authorizations, subpoenas, notices, or other required materials.</p>
+                    <div class="mb-3">
+                        <label for="documents" class="form-label">Select Files (Max 50MB each, PDF/DOC/TXT/JPG/PNG)</label>
+                        <input type="file" id="documents" name="documents" class="form-control" multiple accept=".pdf,.doc,.docx,.txt,.jpg,.png" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+                <a class="btn btn-secondary" asp-page="/Matters/Index">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit Order</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-warning">Matter not found.</div>
+    }
+</div>

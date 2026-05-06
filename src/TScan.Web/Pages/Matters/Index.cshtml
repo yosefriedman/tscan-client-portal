@@ -1,0 +1,55 @@
+@page
+@model MatterListModel
+@{
+    ViewData["Title"] = "Matters";
+}
+
+<div class="container mt-4">
+    <h1>Your Matters</h1>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form method="get" class="d-flex gap-2">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search by matter name, client, or file number..." value="@Model.SearchTerm" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    @if (Model.Matters.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Matter Name</th>
+                        <th>Client Name</th>
+                        <th>File #</th>
+                        <th>Attorney</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var matter in Model.Matters)
+                    {
+                        <tr>
+                            <td>@matter.MatterName</td>
+                            <td>@matter.ClientName</td>
+                            <td>@matter.FileNumber</td>
+                            <td>@matter.ResponsibleAttorney</td>
+                            <td><span class="badge bg-info">@matter.MatterStatus</span></td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" asp-page="/Orders/Create" asp-route-matterId="@matter.Id">Create Order</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No matters found. Please check back later or contact your firm administrator.</div>
+    }
+</div>

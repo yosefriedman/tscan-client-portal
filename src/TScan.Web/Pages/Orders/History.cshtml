@@ -1,0 +1,50 @@
+@page
+@model OrderHistoryModel
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<div class="container mt-4">
+    <h1>Order History</h1>
+
+    @if (Model.Orders.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Matter</th>
+                        <th>Provider</th>
+                        <th>Order Type</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Orders)
+                    {
+                        <tr>
+                            <td>@order.OrderNumber</td>
+                            <td>@order.Matter?.MatterName</td>
+                            <td>@order.ProviderName</td>
+                            <td>@order.OrderType</td>
+                            <td><span class="badge bg-success">@order.Status</span></td>
+                            <td>@order.CreatedAt.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <a class="btn btn-sm btn-info" asp-page="/Orders/Details" asp-route-orderId="@order.Id">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No orders found.</div>
+    }
+
+    <a class="btn btn-primary" asp-page="/Matters/Index">Create New Order</a>
+</div>

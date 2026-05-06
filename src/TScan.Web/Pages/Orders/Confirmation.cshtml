@@ -1,0 +1,53 @@
+@page "{orderId}"
+@model ConfirmationModel
+@{
+    ViewData["Title"] = "Order Confirmed";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-success text-center" role="alert">
+                <h4 class="alert-heading">Order Submitted Successfully!</h4>
+            </div>
+
+            @if (Model.Order != null)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Order Confirmation</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Order Number:</strong> <span class="text-primary">@Model.Order.OrderNumber</span></p>
+                        <p><strong>Matter:</strong> @Model.Order.Matter?.MatterName</p>
+                        <p><strong>Provider:</strong> @Model.Order.ProviderName</p>
+                        <p><strong>Order Type:</strong> @Model.Order.OrderType</p>
+                        <p><strong>Submitted:</strong> @Model.Order.CreatedAt.ToString("MMM dd, yyyy HH:mm:ss")</p>
+                        <p><strong>Status:</strong> <span class="badge bg-success">@Model.Order.Status</span></p>
+
+                        @if (Model.Order.Documents.Any())
+                        {
+                            <hr />
+                            <h6>Attached Documents:</h6>
+                            <ul>
+                                @foreach (var doc in Model.Order.Documents)
+                                {
+                                    <li>@doc.FileName</li>
+                                }
+                            </ul>
+                        }
+
+                        <hr />
+                        <p class="text-muted">A confirmation email has been sent to your registered email address.</p>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <a class="btn btn-primary" asp-page="/Matters/Index">Create Another Order</a>
+                    <a class="btn btn-secondary" asp-page="/Orders/History">View All Orders</a>
+                    <a class="btn btn-secondary" asp-page="/Index">Return Home</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
